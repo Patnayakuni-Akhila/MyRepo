@@ -2,6 +2,8 @@ package com.thinkbig.rest_d.implementation;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+
+import com.thinkbig.rest_d.exception.StoreSellerNotFoundException;
 import com.thinkbig.rest_d.model.StoreSeller;
 import com.thinkbig.rest_d.repository.StoreSellerRepository;
 import com.thinkbig.rest_d.service.StoreSellerService;
@@ -36,6 +38,8 @@ public class StoreSellerServiceImpl implements StoreSellerService{
 
 	@Override
 	public StoreSeller getStoreSeller(String storeSellerId) {
+		if(storeSellerRepository.findById(storeSellerId).isEmpty())
+			throw new StoreSellerNotFoundException("Sorry,the requested Store Seller id does not exist");
 		return storeSellerRepository.findById(storeSellerId).get();
 	}
 
