@@ -2,6 +2,8 @@ package com.thinkbig.rest_d.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thinkbig.rest_d.model.StoreSeller;
+import com.thinkbig.rest_d.response.ResponseHandler;
 import com.thinkbig.rest_d.service.StoreSellerService;
 
 @RestController
@@ -26,9 +29,10 @@ public class StoreSellerAPIController {
 	}
 
 	@GetMapping("{sellerId}")
-	public StoreSeller getStoreSellerDetails(@PathVariable("sellerId") String sellerId) {
+	public ResponseEntity<Object> getStoreSellerDetails(@PathVariable("sellerId") String sellerId) {
+		return ResponseHandler.responseBuilder("Requested seller details are given here", HttpStatus.OK,
+				storeSellerService.getStoreSeller(sellerId));
 		
-		return storeSellerService.getStoreSeller(sellerId);
 		//new StoreSeller("A1","Seller 1","Adress 1","93810");
 	}
 	
